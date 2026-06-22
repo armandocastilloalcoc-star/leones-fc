@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrar base de datos | LEONES F.C.</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0b1a45">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="admin">
+<header id="site-header" class="solid">
+  <nav class="nav">
+    <a href="index.html" class="brand"><img class="crest" src="assets/logo.png" alt="Escudo" width="46" height="46"><div><div class="bname">LEONES F.C.</div><div class="btag">Panel de administración</div></div></a>
+    <a href="index.html" class="btn btn-outline" style="padding:10px 20px">Ver sitio</a>
+  </nav>
+</header>
+
+<main class="admin">
+  <div class="wrap">
+    <h1>Base de datos del sitio</h1>
+    <p class="lead">Aquí administras <b>todo</b> el contenido del sitio: jugadores, calendario, resultados, noticias, galería, tienda y más. Edita, guarda y descarga el archivo <code>data/db.json</code>.</p>
+
+    <div class="abanner">
+      <b>Cómo publicar tus cambios:</b> 1) Edita aquí. 2) Pulsa <b>Descargar db.json</b>. 3) Reemplaza el archivo <code>data/db.json</code> en tu repositorio de GitHub (o arrástralo a Netlify). El sitio se actualiza solo. Tus cambios se guardan también en este navegador automáticamente.
+    </div>
+
+    <div class="admin-bar">
+      <div class="atabs" id="atabs"></div>
+      <span style="flex:1"></span>
+      <input type="file" id="importFile" accept="application/json" style="display:none">
+      <button class="abtn ghost" id="btnImport">Cargar archivo</button>
+      <button class="abtn ghost" id="btnReset">Restaurar</button>
+      <button class="abtn green" id="btnDownload">⬇ Descargar db.json</button>
+    </div>
+
+    <div id="panel"></div>
+  </div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  const LS='leones_db_admin';
+  let state=null, active='club';
+
+  /* ---- Esquemas de colecciones ---- */
+  const CATS=[{v:1,t:'Categoría 1'},{v:2,t:'Categoría 2'},{v:3,t:'Categoría 3'}];
+  const ICONOS=['jersey','hoodie','ball','cap','bottle','key'];
+  const SCHEMAS={
+    club:{label:'Club', kind:'object', path:'club', fields:[
+      {k:'nombre',t:'Nombre'},{k:'subtitulo',t:'Subtítulo'},{k:'tagline',t:'Lema corto'},{k:'lema',t:'Frase de unión'},{k:'ciudad',t:'Ciudad'},
+      {k:'redes.whatsapp',t:'WhatsApp (solo números, ej. 52993...)'},{k:'redes.instagram',t:'Instagram (URL)'},{k:'redes.facebook',t:'Facebook (URL)'},{k:'redes.email',t:'Email'}
+    ]},
+    stats:{label:'Estadísticas', kind:'list', path:'stats', title:i=>i.label, sub:i=>i.num, fields:[
+      {k:'label',t:'Etiqueta'},{k:'num',t:'Número',type:'number'},{k:'sufijo',t:'Sufijo (+, etc.)'}
+    ]},
+    jugadores:{label:'Jugadores', kind:'list', path:'jugadores', title:i=>i.nm, sub:i=>'#'+(i.num||'')+' · '+(i.pos||'')+' · Cat. '+(i.cat||''), fields:[
+      {k:'nm',t:'Nombre'},{k:'num',t:'Número',type:'number'},{k:'pos',t:'Posición'},{k:'edad',t:'Edad',type:'number'},
+      {k:'cat',t:'Categoría',type:'select',opts:CATS},{k:'str',t:'Fortaleza'},{k:'q',t:'Frase'},{k:'foto',t:'Foto (assets/archivo.jpg)'}
+    ]},
+    partidos:{label:'Calendario', kind:'list', path:'partidos', title:i=>'vs '+(i.rival||'—'), sub:i=>(i.fecha||'')+' · '+(i.hora||'')+' · '+(i.lugar||''), fields:[
+      {k:'fecha',t:'Fecha',type:'date'},{k:'rival',t:'Rival'},{k:'lugar',t:'Lugar'},{k:'hora',t:'Hora (ej. 10:00)'},
+      {k:'cat',t:'Categoría',type:'select',opts:CATS},{k:'estado',t:'Estado',type:'select',opts:[{v:'proximo',t:'Próximo'},{v:'ganado',t:'Ganado'},{v:'empatado',t:'Empate'},{v:'perdido',t:'Perdido'}]}
+    ]},
+    resultados:{label:'Resultados', kind:'list', path:'resultados', title:i=>'vs '+(i.rival||'—')+'  '+(i.golesL)+'-'+(i.golesV), sub:i=>(i.fecha||'')+(i.mvp?' · MVP: '+i.mvp:''), fields:[
+      {k:'fecha',t:'Fecha',type:'date'},{k:'rival',t:'Rival'},{k:'golesL',t:'Goles Leones',type:'number'},{k:'golesV',t:'Goles rival',type:'number'},
+      {k:'cat',t:'Categoría',type:'select',opts:CATS},{k:'mvp',t:'Jugador del partido'}
+    ]},
+    noticias:{label:'Noticias', kind:'list', path:'noticias', title:i=>i.t, sub:i=>(i.date||'')+' · '+(i.tag||''), fields:[
+      {k:'t',t:'Título'},{k:'date',t:'Fecha (texto)'},{k:'tag',t:'Etiqueta'},{k:'x',t:'Texto',type:'area'},{k:'img',t:'Imagen (assets/archivo.jpg)'}
+    ]},
+    galeria:{label:'Galería', kind:'list', path:'galeria', title:i=>i.c?i.c.replace(/<[^>]+>/g,''):'(foto)', sub:i=>i.img, fields:[
+      {k:'img',t:'Imagen (assets/archivo.jpg)'},{k:'c',t:'Texto / pie de foto'}
+    ]},
+    tienda:{label:'Tienda', kind:'list', path:'tienda.productos', title:i=>i.n, sub:i=>i.precio+' · '+i.cat, fields:[
+      {k:'n',t:'Producto'},{k:'cat',t:'Categoría (Uniformes/Souvenirs)'},{k:'precio',t:'Precio (ej. $650)'},{k:'d',t:'Descripción'},
+      {k:'ic',t:'Ícono',type:'select',opts:ICONOS.map(x=>({v:x,t:x}))},{k:'link',t:'Enlace de pago (Stripe)'}
+    ]},
+    historia:{label:'Historia', kind:'list', path:'historia', title:i=>i.t, sub:i=>i.yr, fields:[
+      {k:'yr',t:'Año / etiqueta'},{k:'t',t:'Título'},{k:'d',t:'Descripción',type:'area'}
+    ]},
+    avisos:{label:'Avisos', kind:'list', path:'avisos', title:i=>(i.texto||'').replace(/<[^>]+>/g,'').slice(0,50), sub:i=>i.badge, fields:[
+      {k:'badge',t:'Tipo',type:'select',opts:[{v:'info',t:'info'},{v:'aviso',t:'aviso'},{v:'urgente',t:'urgente'}]},{k:'texto',t:'Texto'}
+    ]}
+  };
+
+  /* ---- utilidades de ruta ---- */
+  function getPath(obj,path){return path.split('.').reduce((o,k)=>o&&o[k],obj);}
+  function setField(obj,path,val){const ks=path.split('.');let o=obj;for(let i=0;i<ks.length-1;i++){if(o[ks[i]]==null)o[ks[i]]={};o=o[ks[i]];}o[ks[ks.length-1]]=val;}
+
+  /* ---- carga ---- */
+  async function init(){
+    const saved=localStorage.getItem(LS);
+    if(saved){try{state=JSON.parse(saved);}catch(e){}}
+    if(!state){
+      try{const r=await fetch('data/db.json',{cache:'no-cache'});state=await r.json();}
+      catch(e){alert('No se pudo cargar data/db.json. Carga el archivo manualmente con "Cargar archivo".');state={club:{redes:{}}};}
+    }
+    buildTabs();render();
+  }
+  function persist(){localStorage.setItem(LS,JSON.stringify(state));}
+
+  function buildTabs(){
+    const tabs=document.getElementById('atabs');
+    tabs.innerHTML=Object.keys(SCHEMAS).map(k=>`<button class="atab${k===active?' active':''}" data-k="${k}">${SCHEMAS[k].label}</button>`).join('');
+    tabs.onclick=e=>{const b=e.target.closest('.atab');if(!b)return;active=b.dataset.k;buildTabs();render();};
+  }
+
+  function fieldInput(f,val){
+    const v=val==null?'':String(val).replace(/"/g,'&quot;');
+    if(f.type==='select'){return `<select data-k="${f.k}">${f.opts.map(o=>`<option value="${o.v}" ${String(val)===String(o.v)?'selected':''}>${o.t}</option>`).join('')}</select>`;}
+    if(f.type==='area'){return `<textarea data-k="${f.k}" rows="2">${val==null?'':String(val)}</textarea>`;}
+    const t=f.type==='number'?'number':(f.type==='date'?'date':'text');
+    return `<input data-k="${f.k}" type="${t}" value="${v}">`;
+  }
+
+  function render(){
+    const s=SCHEMAS[active], panel=document.getElementById('panel');
+    if(s.kind==='object'){
+      const obj=getPath(state,s.path)||{};
+      panel.innerHTML=`<div class="acard"><h3>${s.label}</h3><p class="hint">Datos generales del club. Se reflejan en todo el sitio.</p>
+        <div class="arow">${s.fields.map(f=>`<div class="afield" style="grid-column:span 1"><label>${f.t}</label>${fieldInput(f,getPath(obj,f.k))}</div>`).join('')}</div>
+        <div class="abtns"><button class="abtn primary" id="saveObj">Guardar cambios</button></div></div>`;
+      document.getElementById('saveObj').onclick=()=>{
+        const o=getPath(state,s.path)||{};
+        panel.querySelectorAll('[data-k]').forEach(el=>setField(o,el.dataset.k,el.value));
+        setPath(state,s.path,o);persist();toast('Guardado ✔');
+      };
+      return;
+    }
+    // list
+    const arr=getPath(state,s.path)||[];
+    panel.innerHTML=`
+      <div class="acard"><h3>Agregar a ${s.label}</h3><p class="hint">Llena los campos y pulsa “Agregar”.</p>
+        <div class="arow" id="addRow">${s.fields.map(f=>`<div class="afield"><label>${f.t}</label>${fieldInput(f,f.type==='select'?(f.opts[0].v):'')}</div>`).join('')}</div>
+        <div class="abtns"><button class="abtn primary" id="addBtn">+ Agregar</button></div>
+      </div>
+      <div class="acard"><h3>${s.label} <span style="color:var(--gris);font-size:.9rem">(${arr.length})</span></h3>
+        <div class="alist" id="list">${arr.length?arr.map((it,idx)=>`<div class="aitem"><div class="meta"><b>${escapeHtml(s.title(it))}</b><small>${escapeHtml(s.sub(it)||'')}</small></div><button class="del" data-i="${idx}">Eliminar</button></div>`).join(''):'<p class="hint">Aún no hay elementos. Agrega el primero arriba.</p>'}</div>
+      </div>`;
+    document.getElementById('addBtn').onclick=()=>{
+      const obj={};document.querySelectorAll('#addRow [data-k]').forEach(el=>{let v=el.value;if(el.type==='number'&&v!=='')v=Number(v);obj[el.dataset.k]=v;});
+      const a=getPath(state,s.path)||[];a.push(obj);setPath(state,s.path,a);persist();render();toast('Agregado ✔');
+    };
+    document.getElementById('list').onclick=e=>{const b=e.target.closest('.del');if(!b)return;const a=getPath(state,s.path);a.splice(+b.dataset.i,1);persist();render();toast('Eliminado');};
+  }
+
+  function setPath(obj,path,val){const ks=path.split('.');let o=obj;for(let i=0;i<ks.length-1;i++){if(o[ks[i]]==null)o[ks[i]]={};o=o[ks[i]];}o[ks[ks.length-1]]=val;}
+  function escapeHtml(s){return (s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+  function toast(msg){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0b1a45;color:#fff;padding:12px 22px;border-radius:50px;font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em;z-index:999;box-shadow:0 14px 30px -12px rgba(0,0,0,.5)';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';clearTimeout(t._h);t._h=setTimeout(()=>t.style.opacity='0',1600);}
+
+  /* ---- botones globales ---- */
+  document.getElementById('btnDownload').onclick=()=>{
+    const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='db.json';a.click();URL.revokeObjectURL(a.href);toast('Descargado ✔');
+  };
+  document.getElementById('btnImport').onclick=()=>document.getElementById('importFile').click();
+  document.getElementById('importFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{state=JSON.parse(rd.result);persist();buildTabs();render();toast('Archivo cargado ✔');}catch(err){alert('Archivo no válido');}};rd.readAsText(f);};
+  document.getElementById('btnReset').onclick=async()=>{if(!confirm('Esto descarta tus cambios locales y recarga el db.json publicado. ¿Continuar?'))return;localStorage.removeItem(LS);state=null;await init();toast('Restaurado');};
+
+  init();
+})();
+</script>
+</body>
+</html>
