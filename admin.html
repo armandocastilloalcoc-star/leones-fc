@@ -71,6 +71,10 @@
       {k:'fecha',t:'Fecha',type:'date'},{k:'rival',t:'Rival'},{k:'golesL',t:'Goles Leones',type:'number'},{k:'golesV',t:'Goles rival',type:'number'},
       {k:'cat',t:'Categoría',type:'select',opts:CATS},{k:'mvp',t:'Jugador del partido'}
     ]},
+    visorias:{label:'Visorías', kind:'list', path:'visorias', title:i=>'Visoría con '+(i.equipo||'—'), sub:i=>(i.fecha||'')+' · '+(i.hora||'')+' · '+(i.lugar||''), fields:[
+      {k:'fecha',t:'Fecha',type:'date'},{k:'equipo',t:'Equipo (con quién)'},{k:'lugar',t:'Lugar'},{k:'hora',t:'Hora'},
+      {k:'cat',t:'Categoría',type:'select',opts:CATS},{k:'estado',t:'Estado',type:'select',opts:[{v:'proximo',t:'Próxima'},{v:'realizada',t:'Realizada'},{v:'cancelada',t:'Cancelada'}]}
+    ]},
     noticias:{label:'Noticias', kind:'list', path:'noticias', title:i=>i.t, sub:i=>(i.date||'')+' · '+(i.tag||''), fields:[
       {k:'t',t:'Título'},{k:'date',t:'Fecha (texto)'},{k:'tag',t:'Etiqueta'},{k:'x',t:'Texto',type:'area'},{k:'img',t:'Imagen (assets/archivo.jpg)'}
     ]},
