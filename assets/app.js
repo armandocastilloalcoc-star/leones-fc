@@ -49,8 +49,8 @@
       '<linearGradient id="rd' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a5f"/><stop offset="1" stop-color="#c01f24"/></linearGradient>' +
       '<linearGradient id="wh' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e7edf8"/></linearGradient>' +
       '</defs>';
-    const open = '<svg viewBox="0 0 200 180" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' + defs +
-      '<rect width="200" height="180" fill="url(#bg' + id + ')"/>';
+    const open = '<svg viewBox="0 0 200 180" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">' + defs +
+      '<rect x="-40" y="0" width="280" height="180" fill="url(#bg' + id + ')"/>';
     const close = '</svg>';
     const BL = 'url(#bl' + id + ')', RG = 'url(#rd' + id + ')', WH = 'url(#wh' + id + ')';
     const shadow = (cx, cy, rx) => '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="9" fill="rgba(10,22,51,.15)"/>';
