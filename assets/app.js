@@ -40,49 +40,64 @@
 
   /* ---------- ILUSTRACIONES DE PRODUCTO (tienda) ---------- */
   function crestTag(x, y, w) { return '<image href="assets/logo.png" x="' + x + '" y="' + y + '" width="' + w + '" height="' + w + '"/>'; }
-  function productArt(ic) {
-    const A = '#1e54cf', AD = '#0f2f86', R = '#e42b30', W = '#ffffff';
-    const open = '<svg viewBox="0 0 240 160" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">';
+  function productArt(ic, uid) {
+    uid = uid || 0;
+    const AD = '#10307f', R = '#e42b30', id = 'p' + uid;
+    const defs = '<defs>' +
+      '<radialGradient id="bg' + id + '" cx="50%" cy="34%" r="75%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dee8fb"/></radialGradient>' +
+      '<linearGradient id="bl' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f7bea"/><stop offset="1" stop-color="#163aa0"/></linearGradient>' +
+      '<linearGradient id="rd' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff5a5f"/><stop offset="1" stop-color="#c01f24"/></linearGradient>' +
+      '<linearGradient id="wh' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e7edf8"/></linearGradient>' +
+      '</defs>';
+    const open = '<svg viewBox="0 0 200 180" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">' + defs +
+      '<rect width="200" height="180" fill="url(#bg' + id + ')"/>';
     const close = '</svg>';
-    const jersey = (crest) =>
-      '<path d="M86 44 L104 30 Q120 40 136 30 L154 44 L172 58 L158 74 L146 66 L146 128 Q120 136 94 128 L94 66 L82 74 L68 58 Z" fill="' + W + '" stroke="' + AD + '" stroke-width="3"/>' +
-      '<path d="M86 44 L104 30 Q112 36 116 50 L96 60 Z" fill="' + A + '"/>' +
-      '<path d="M154 44 L136 30 Q128 36 124 50 L144 60 Z" fill="' + A + '"/>' +
-      '<path d="M104 30 Q120 40 136 30 L132 36 Q120 46 108 36 Z" fill="' + R + '"/>' +
-      '<rect x="94" y="120" width="52" height="8" fill="' + A + '"/>' +
-      (crest ? crestTag(107, 62, 26) : '');
+    const BL = 'url(#bl' + id + ')', RG = 'url(#rd' + id + ')', WH = 'url(#wh' + id + ')';
+    const shadow = (cx, cy, rx) => '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="9" fill="rgba(10,22,51,.15)"/>';
+    const jersey = (crest, cs) =>
+      '<path d="M58 54 L80 34 Q100 47 120 34 L142 54 L166 72 L150 92 L134 80 V142 Q100 153 66 142 V80 L50 92 L34 72 Z" fill="' + WH + '" stroke="' + AD + '" stroke-width="2"/>' +
+      '<path d="M58 54 L80 34 Q90 43 95 60 L70 72 Z" fill="' + BL + '"/>' +
+      '<path d="M142 54 L120 34 Q110 43 105 60 L130 72 Z" fill="' + BL + '"/>' +
+      '<path d="M80 34 Q100 47 120 34 L113 42 Q100 52 87 42 Z" fill="' + RG + '"/>' +
+      '<rect x="66" y="132" width="68" height="8" fill="' + BL + '"/>' +
+      (crest ? crestTag(82, 74, cs || 38) : '');
     switch (ic) {
-      case 'jersey': return open + jersey(true) + close;
-      case 'kit': return open +
-        '<g transform="translate(-30 -16) scale(0.78)">' + jersey(true) + '</g>' +
-        '<path d="M150 98 h56 l-6 44 h-18 l-4 -24 -4 24 h-18 z" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
-        '<rect x="150" y="98" width="56" height="7" fill="' + R + '"/>' + close;
-      case 'hoodie': return open +
-        '<path d="M84 54 Q120 30 156 54 L172 68 L158 84 L148 76 V134 Q120 142 92 134 V76 L82 84 L68 68 Z" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
-        '<path d="M100 46 Q120 62 140 46 Q140 32 120 32 Q100 32 100 46 Z" fill="' + AD + '"/>' +
-        '<line x1="112" y1="60" x2="112" y2="78" stroke="' + W + '" stroke-width="3"/>' +
-        '<line x1="128" y1="60" x2="128" y2="78" stroke="' + W + '" stroke-width="3"/>' +
-        crestTag(107, 88, 26) + close;
-      case 'ball': return open +
-        '<circle cx="120" cy="82" r="50" fill="' + W + '" stroke="' + AD + '" stroke-width="3"/>' +
-        '<path d="M120 54 l19 14 -7 23 h-24 l-7 -23 z" fill="' + A + '"/>' +
-        '<path d="M120 54 l-19 14 M101 68 l-9 18 M139 68 l9 18 M108 91 l-12 16 M132 91 l12 16" stroke="' + AD + '" stroke-width="3" fill="none"/>' +
-        crestTag(150, 46, 22) + close;
-      case 'cap': return open +
-        '<path d="M62 100 Q120 36 178 100 Q120 86 62 100 Z" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
-        '<path d="M58 100 Q120 86 182 100 L200 114 Q120 104 58 114 Z" fill="' + R + '"/>' +
-        crestTag(104, 56, 32) + close;
-      case 'bottle': return open +
-        '<rect x="101" y="32" width="38" height="14" rx="3" fill="' + AD + '"/>' +
-        '<rect x="104" y="46" width="32" height="96" rx="13" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
-        '<rect x="104" y="82" width="32" height="26" fill="' + W + '"/>' +
-        crestTag(108, 82, 24) + close;
-      case 'key': return open +
-        '<circle cx="86" cy="66" r="17" fill="none" stroke="' + AD + '" stroke-width="6"/>' +
-        '<path d="M99 78 l16 16" stroke="' + AD + '" stroke-width="6"/>' +
-        '<path d="M116 90 l44 -16 10 26 -44 18 z" fill="' + A + '" stroke="' + AD + '" stroke-width="2"/>' +
-        crestTag(130, 80, 32) + close;
-      default: return open + jersey(true) + close;
+      case 'jersey': return open + shadow(100, 150, 52) + jersey(true) + close;
+      case 'kit': return open + shadow(100, 158, 60) +
+        '<g transform="translate(20 -2) scale(0.66)">' + jersey(true, 40) + '</g>' +
+        '<path d="M70 120 h60 l-8 46 h-19 l-3 -26 -3 26 h-19 z" fill="' + BL + '" stroke="' + AD + '" stroke-width="2"/>' +
+        '<rect x="70" y="120" width="60" height="7" fill="' + RG + '"/>' + close;
+      case 'hoodie': return open + shadow(100, 152, 54) +
+        '<path d="M52 60 Q100 28 148 60 L172 78 L154 100 L138 86 V146 Q100 156 62 146 V86 L46 100 L28 78 Z" fill="' + BL + '" stroke="' + AD + '" stroke-width="2"/>' +
+        '<path d="M76 50 Q100 72 124 50 Q124 32 100 32 Q76 32 76 50 Z" fill="' + AD + '"/>' +
+        '<rect x="86" y="120" width="28" height="20" rx="3" fill="' + AD + '" opacity=".55"/>' +
+        '<line x1="92" y1="64" x2="92" y2="86" stroke="#fff" stroke-width="3"/>' +
+        '<line x1="108" y1="64" x2="108" y2="86" stroke="#fff" stroke-width="3"/>' +
+        crestTag(82, 92, 36) + close;
+      case 'ball': return open + shadow(100, 156, 46) +
+        '<circle cx="100" cy="84" r="60" fill="' + WH + '" stroke="' + AD + '" stroke-width="2"/>' +
+        '<path d="M100 50 l23 17 -9 28 h-28 l-9 -28 z" fill="' + BL + '"/>' +
+        '<path d="M100 50 l-23 17 M77 67 l-11 22 M123 67 l11 22 M86 95 l-14 19 M114 95 l14 19" stroke="' + AD + '" stroke-width="3" fill="none"/>' +
+        '<path d="M70 124 a60 60 0 0 0 18 14 M130 124 a60 60 0 0 1 -18 14" stroke="' + RG + '" stroke-width="3" fill="none"/>' +
+        crestTag(133, 50, 26) + close;
+      case 'cap': return open + shadow(100, 150, 56) +
+        '<path d="M44 116 Q100 30 156 116 Q100 98 44 116 Z" fill="' + BL + '" stroke="' + AD + '" stroke-width="2"/>' +
+        '<path d="M100 32 Q100 70 100 100" stroke="' + AD + '" stroke-width="2" opacity=".3"/>' +
+        '<path d="M40 116 Q100 98 160 116 L186 132 Q100 120 40 132 Z" fill="' + RG + '"/>' +
+        '<circle cx="100" cy="36" r="5" fill="' + AD + '"/>' +
+        crestTag(80, 58, 40) + close;
+      case 'bottle': return open + shadow(100, 156, 30) +
+        '<rect x="86" y="22" width="28" height="16" rx="4" fill="' + AD + '"/>' +
+        '<rect x="80" y="38" width="40" height="118" rx="18" fill="' + BL + '" stroke="' + AD + '" stroke-width="2"/>' +
+        '<rect x="80" y="84" width="40" height="34" fill="' + WH + '"/>' +
+        '<rect x="88" y="46" width="6" height="100" rx="3" fill="#fff" opacity=".25"/>' +
+        crestTag(83, 86, 34) + close;
+      case 'key': return open + shadow(100, 158, 44) +
+        '<circle cx="70" cy="60" r="22" fill="none" stroke="' + AD + '" stroke-width="8"/>' +
+        '<path d="M86 76 l20 20" stroke="' + AD + '" stroke-width="8" stroke-linecap="round"/>' +
+        '<path d="M104 92 q-6 -8 2 -14 l40 -26 q10 -6 16 4 l8 14 q6 10 -4 16 l-40 26 q-10 6 -16 -4 z" fill="' + BL + '" stroke="' + AD + '" stroke-width="2"/>' +
+        crestTag(118, 70, 44) + close;
+      default: return open + shadow(100, 150, 52) + jersey(true) + close;
     }
   }
 
@@ -271,7 +286,7 @@
     ${pageHero('El <span class="hl">Club</span>', 'Más que un equipo: una manada con garra, corazón y valores que forman campeones de vida.', 'El club')}
     <section class="identity flush"><div class="wrap"><div class="identity-grid">
       <div class="identity-copy reveal"><span class="eyebrow">Quiénes somos</span><h2>Una <span class="hl">familia</span> con escudo.</h2>${desc}</div>
-      <div class="identity-art reveal"><img class="art-photo" src="assets/anthem.jpg" alt="${esc(c.nombre)} en la cancha"><div class="ribbon">"${esc(c.lema)}"</div></div>
+      <div class="identity-art reveal"><img class="art-photo" src="assets/logo.png" alt="Escudo de ${esc(c.nombre)}" style="object-fit:contain;padding:54px"><div class="ribbon">"${esc(c.lema)}"</div></div>
     </div></div></section>
     <section class="valores"><div class="wrap"><div class="section-head reveal"><span class="eyebrow">El ADN del club</span><h2 class="section-title">Nuestros <span class="hl">valores</span></h2><p>Ocho principios que nos hacen Leones dentro y fuera de la cancha.</p></div><div class="valores-grid">${valores}</div></div></section>
     <section class="history"><div class="wrap"><div class="section-head reveal" style="margin:0 auto 46px;text-align:center"><span class="eyebrow" style="justify-content:center">Nuestra historia</span><h2 class="section-title">El camino de la <span class="hl">manada</span></h2></div><div class="timeline">${tl}</div></div></section>
@@ -427,7 +442,7 @@
       const prods = (db.tienda && db.tienda.productos) || [];
       const draw = (cat) => {
         const list = cat === 'Todos' ? prods : prods.filter(p => p.cat === cat);
-        grid.innerHTML = list.map(p => `<div class="product reveal"><div class="pimg">${productArt(p.ic)}<span class="ptag">${esc(p.cat)}</span></div>
+        grid.innerHTML = list.map((p, i) => `<div class="product reveal"><div class="pimg">${productArt(p.ic, i)}<span class="ptag">${esc(p.cat)}</span></div>
           <div class="pbody"><h3>${esc(p.n)}</h3><div class="pd">${esc(p.d)}</div>
           <div class="prow"><span class="price">${esc(p.precio)}</span><a class="buy" href="${esc(p.link || '#')}"${p.link && p.link !== '#' ? ' target="_blank" rel="noopener"' : ''}>${icoStroke('cart')} Comprar</a></div></div></div>`).join('');
         document.querySelectorAll('#storeGrid .reveal').forEach(el => el.classList.add('in'));
