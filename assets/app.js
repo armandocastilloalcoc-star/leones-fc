@@ -38,6 +38,54 @@
   const icoStroke = (n) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (I[n] || I.shield) + '</svg>';
   const icoFill = (n) => '<svg viewBox="0 0 24 24" fill="currentColor">' + (I[n] || '') + '</svg>';
 
+  /* ---------- ILUSTRACIONES DE PRODUCTO (tienda) ---------- */
+  function crestTag(x, y, w) { return '<image href="assets/logo.png" x="' + x + '" y="' + y + '" width="' + w + '" height="' + w + '"/>'; }
+  function productArt(ic) {
+    const A = '#1e54cf', AD = '#0f2f86', R = '#e42b30', W = '#ffffff';
+    const open = '<svg viewBox="0 0 240 160" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">';
+    const close = '</svg>';
+    const jersey = (crest) =>
+      '<path d="M86 44 L104 30 Q120 40 136 30 L154 44 L172 58 L158 74 L146 66 L146 128 Q120 136 94 128 L94 66 L82 74 L68 58 Z" fill="' + W + '" stroke="' + AD + '" stroke-width="3"/>' +
+      '<path d="M86 44 L104 30 Q112 36 116 50 L96 60 Z" fill="' + A + '"/>' +
+      '<path d="M154 44 L136 30 Q128 36 124 50 L144 60 Z" fill="' + A + '"/>' +
+      '<path d="M104 30 Q120 40 136 30 L132 36 Q120 46 108 36 Z" fill="' + R + '"/>' +
+      '<rect x="94" y="120" width="52" height="8" fill="' + A + '"/>' +
+      (crest ? crestTag(107, 62, 26) : '');
+    switch (ic) {
+      case 'jersey': return open + jersey(true) + close;
+      case 'kit': return open +
+        '<g transform="translate(-30 -16) scale(0.78)">' + jersey(true) + '</g>' +
+        '<path d="M150 98 h56 l-6 44 h-18 l-4 -24 -4 24 h-18 z" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
+        '<rect x="150" y="98" width="56" height="7" fill="' + R + '"/>' + close;
+      case 'hoodie': return open +
+        '<path d="M84 54 Q120 30 156 54 L172 68 L158 84 L148 76 V134 Q120 142 92 134 V76 L82 84 L68 68 Z" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
+        '<path d="M100 46 Q120 62 140 46 Q140 32 120 32 Q100 32 100 46 Z" fill="' + AD + '"/>' +
+        '<line x1="112" y1="60" x2="112" y2="78" stroke="' + W + '" stroke-width="3"/>' +
+        '<line x1="128" y1="60" x2="128" y2="78" stroke="' + W + '" stroke-width="3"/>' +
+        crestTag(107, 88, 26) + close;
+      case 'ball': return open +
+        '<circle cx="120" cy="82" r="50" fill="' + W + '" stroke="' + AD + '" stroke-width="3"/>' +
+        '<path d="M120 54 l19 14 -7 23 h-24 l-7 -23 z" fill="' + A + '"/>' +
+        '<path d="M120 54 l-19 14 M101 68 l-9 18 M139 68 l9 18 M108 91 l-12 16 M132 91 l12 16" stroke="' + AD + '" stroke-width="3" fill="none"/>' +
+        crestTag(150, 46, 22) + close;
+      case 'cap': return open +
+        '<path d="M62 100 Q120 36 178 100 Q120 86 62 100 Z" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
+        '<path d="M58 100 Q120 86 182 100 L200 114 Q120 104 58 114 Z" fill="' + R + '"/>' +
+        crestTag(104, 56, 32) + close;
+      case 'bottle': return open +
+        '<rect x="101" y="32" width="38" height="14" rx="3" fill="' + AD + '"/>' +
+        '<rect x="104" y="46" width="32" height="96" rx="13" fill="' + A + '" stroke="' + AD + '" stroke-width="3"/>' +
+        '<rect x="104" y="82" width="32" height="26" fill="' + W + '"/>' +
+        crestTag(108, 82, 24) + close;
+      case 'key': return open +
+        '<circle cx="86" cy="66" r="17" fill="none" stroke="' + AD + '" stroke-width="6"/>' +
+        '<path d="M99 78 l16 16" stroke="' + AD + '" stroke-width="6"/>' +
+        '<path d="M116 90 l44 -16 10 26 -44 18 z" fill="' + A + '" stroke="' + AD + '" stroke-width="2"/>' +
+        crestTag(130, 80, 32) + close;
+      default: return open + jersey(true) + close;
+    }
+  }
+
   /* ---------- NAVEGACIÓN ---------- */
   const NAV = [
     { t: 'Inicio', h: 'index.html', k: 'inicio' },
@@ -193,7 +241,7 @@
         <a href="club.html" class="btn btn-outline" style="margin-top:8px">Conoce el club ${icoStroke('arrow')}</a>
       </div>
       <div class="identity-art reveal">
-        <img class="art-photo" src="assets/campeon.jpg" alt="Campeón de ${esc(c.nombre)} con su trofeo">
+        <img class="art-photo" src="assets/logo.png" alt="Escudo de ${esc(c.nombre)}" style="object-fit:contain;padding:54px">
         <div class="ribbon">"${esc(c.lema)}"</div>
       </div>
     </div></div></section>
@@ -379,7 +427,7 @@
       const prods = (db.tienda && db.tienda.productos) || [];
       const draw = (cat) => {
         const list = cat === 'Todos' ? prods : prods.filter(p => p.cat === cat);
-        grid.innerHTML = list.map(p => `<div class="product reveal"><div class="pimg">${icoStroke(p.ic)}<span class="ptag">${esc(p.cat)}</span></div>
+        grid.innerHTML = list.map(p => `<div class="product reveal"><div class="pimg">${productArt(p.ic)}<span class="ptag">${esc(p.cat)}</span></div>
           <div class="pbody"><h3>${esc(p.n)}</h3><div class="pd">${esc(p.d)}</div>
           <div class="prow"><span class="price">${esc(p.precio)}</span><a class="buy" href="${esc(p.link || '#')}"${p.link && p.link !== '#' ? ' target="_blank" rel="noopener"' : ''}>${icoStroke('cart')} Comprar</a></div></div></div>`).join('');
         document.querySelectorAll('#storeGrid .reveal').forEach(el => el.classList.add('in'));
