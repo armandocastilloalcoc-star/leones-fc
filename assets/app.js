@@ -281,7 +281,13 @@
     const desc = (c.descripcion || []).map(p => `<p>${esc(p)}</p>`).join('');
     const valores = (db.valores || []).map((v, i) => `<div class="valor${i % 2 ? ' red' : ''} reveal"><div class="ico">${icoStroke(v.ic)}</div><h3>${esc(v.n)}</h3><p>${esc(v.d)}</p></div>`).join('');
     const tl = (db.historia || []).map(t => `<div class="tl-item reveal"><span class="dot"></span><div class="tl-card"><div class="yr">${esc(t.yr)}</div><h4>${esc(t.t)}</h4><p>${esc(t.d)}</p></div></div>`).join('');
-    const himno = (db.himno && db.himno.lineas || []).map((l, i) => i === 0 ? `<b>${l}</b><br>` : (l + (i < db.himno.lineas.length - 1 ? '<br>' : ''))).join('');
+    const H = db.himno || {};
+    const stz = a => (a || []).join('<br>');
+    let himno;
+    if (H.coro || H.versos) {
+      himno = (H.coro ? '<p class="coro"><span class="lbl">Coro</span>' + stz(H.coro) + '</p>' : '') +
+        (H.versos || []).map(v => '<p>' + stz(v) + '</p>').join('');
+    } else { himno = stz(H.lineas); }
     return `
     ${pageHero('El <span class="hl">Club</span>', 'Más que un equipo: una manada con garra, corazón y valores que forman campeones de vida.', 'El club')}
     <section class="identity flush"><div class="wrap"><div class="identity-grid">

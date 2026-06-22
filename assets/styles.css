@@ -434,3 +434,9 @@ footer{background:#070f24;color:#fff;padding:60px 0 26px}
   .fx .hour,.fx .status{grid-column:2;justify-self:start}
   .stats-inner{transform:translateY(-30px)}
 }
+
+/* ===================== HIMNO (estrofas) ===================== */
+.anthem .lyrics p{margin-bottom:22px}
+.anthem .lyrics p:last-child{margin-bottom:0}
+.anthem .lyrics .coro{color:#fff}
+.anthem .lyrics .coro .lbl{display:block;font-family:var(--cond);font-weight:700;letter-spacing:.22em;font-size:.8rem;color:var(--azul-claro);margin-bottom:8px}
