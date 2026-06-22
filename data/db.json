@@ -212,29 +212,6 @@
       "d": "Crecer y seguir formando campeones de vida."
     }
   ],
-  "himno": {
-    "titulo": "Himno de Leones F.C.",
-    "coro": [
-      "¡Leones, Leones, con garra y honor!",
-      "Rugimos unidos, jugamos con corazón.",
-      "Desde Tabasco salimos a triunfar,",
-      "con la frente en alto, ¡nadie nos detendrá!"
-    ],
-    "versos": [
-      [
-        "En la cancha nace nuestra ilusión,",
-        "cada niño un sueño, cada paso una canción.",
-        "Azul y rojo llevamos en la piel,",
-        "la manada ruge, fieles a su fe."
-      ],
-      [
-        "No importa el rival ni el marcador,",
-        "salimos con fuerza, con respeto y valor.",
-        "Caer y alzarse, esa es la lección:",
-        "Leones de Tabasco, ¡campeones de corazón!"
-      ]
-    ]
-  },
   "avisos": [
     {
       "badge": "info",
@@ -276,5 +253,6 @@
     "Somos Leones F.C.",
     "Con garra, con fuerza, con alegría",
     "Aquí se forman <span class='r'>campeones</span>"
-  ]
+  ],
+  "visorias": []
 }
