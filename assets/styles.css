@@ -440,3 +440,16 @@ footer{background:#070f24;color:#fff;padding:60px 0 26px}
 .anthem .lyrics p:last-child{margin-bottom:0}
 .anthem .lyrics .coro{color:#fff}
 .anthem .lyrics .coro .lbl{display:block;font-family:var(--cond);font-weight:700;letter-spacing:.22em;font-size:.8rem;color:var(--azul-claro);margin-bottom:8px}
+
+/* ===================== HERO CON VIDEO ===================== */
+.hero-vid{position:relative;overflow:hidden}
+.hero-vid .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-vid .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(6,12,30,.92) 0%,rgba(6,12,30,.7) 42%,rgba(6,12,30,.4) 75%,rgba(6,12,30,.55) 100%),linear-gradient(0deg,rgba(6,12,30,.55),transparent 38%)}
+.hero-vid .wrap{position:relative;z-index:2;width:100%}
+.hero-content{max-width:660px}
+@media(max-width:980px){
+  .hero-vid .hero-overlay{background:linear-gradient(0deg,rgba(6,12,30,.85),rgba(6,12,30,.55))}
+  .hero-content{max-width:none;text-align:center}
+  .hero-vid .hero-cta{justify-content:center}
+  .hero-vid .eyebrow{justify-content:center}
+}
