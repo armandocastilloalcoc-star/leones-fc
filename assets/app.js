@@ -220,18 +220,30 @@
     const stats = (db.stats || []).map(s => `<div class="stat"><div class="num"><span data-count="${+s.num || 0}" data-suf="${esc(s.sufijo)}">0</span></div><div class="lbl">${esc(s.label)}</div></div>`).join('');
     const valores = (db.valores || []).slice(0, 4).map((v, i) => `<div class="valor${i % 2 ? ' red' : ''} reveal"><div class="ico">${icoStroke(v.ic)}</div><h3>${esc(v.n)}</h3><p>${esc(v.d)}</p></div>`).join('');
     return `
-    <section class="hero hero-vid" id="inicio">
-      <video class="hero-bg" autoplay muted loop playsinline preload="auto" poster="${esc(heroImg)}"><source src="assets/hero.mp4" type="video/mp4"></video>
-      <div class="hero-overlay"></div>
-      <div class="wrap"><div class="hero-content reveal">
-        <span class="eyebrow light">${esc(c.subtitulo)} · ${esc(c.ciudad)}</span>
-        <h1>${esc(c.nombre).replace(' F.C.', '')} <span style="-webkit-text-fill-color:initial">F.C.</span></h1>
-        <div class="lead-line">Garra, corazón y <span class="r">fútbol.</span></div>
-        <p class="sub">Un club infantil donde cada niño aprende a jugar, competir, convivir y rugir como campeón. Aquí empieza la historia de los más grandes.</p>
-        <div class="hero-cta">
-          <a href="equipo.html" class="btn btn-primary">Conoce al equipo ${icoStroke('arrow')}</a>
-          <a href="calendario.html" class="btn btn-ghost">Ver calendario</a>
-          <a href="contacto.html" class="btn btn-ghost">Inscripciones</a>
+    <section class="hero" id="inicio">
+      <svg class="pitch-lines" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="none" stroke="rgba(120,160,255,.18)" stroke-width="2"><circle cx="720" cy="400" r="130"/><line x1="720" y1="0" x2="720" y2="800"/><rect x="0" y="250" width="170" height="300"/><rect x="1270" y="250" width="170" height="300"/></g></svg>
+      <div class="glow"></div><div class="glow red"></div>
+      <div class="speed" style="top:30%;left:0;width:40%"></div><div class="speed" style="top:62%;right:0;width:30%"></div>
+      <div class="wrap"><div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow light">${esc(c.subtitulo)} · ${esc(c.ciudad)}</span>
+          <h1>${esc(c.nombre).replace(' F.C.', '')} <span style="-webkit-text-fill-color:initial">F.C.</span></h1>
+          <div class="lead-line">Garra, corazón y <span class="r">fútbol.</span></div>
+          <p class="sub">Un club infantil donde cada niño aprende a jugar, competir, convivir y rugir como campeón. Aquí empieza la historia de los más grandes.</p>
+          <div class="hero-cta">
+            <a href="equipo.html" class="btn btn-primary">Conoce al equipo ${icoStroke('arrow')}</a>
+            <a href="calendario.html" class="btn btn-ghost">Ver calendario</a>
+            <a href="contacto.html" class="btn btn-ghost">Inscripciones</a>
+          </div>
+        </div>
+        <div class="hero-art">
+          <div class="hero-photo">
+            <img src="${esc(heroImg)}" alt="Jugador de ${esc(c.nombre)} en el estadio" width="400" height="533">
+            <img class="hp-logo" src="assets/logo.png" alt="Escudo ${esc(c.nombre)}" width="62" height="62">
+            <span class="hp-tag">Orgullo Leones</span>
+          </div>
+          <div class="hero-badge b1"><span class="n">⚽</span>Tabasco</div>
+          <div class="hero-badge b2"><span class="n">#1</span>Garra</div>
         </div>
       </div></div>
     </section>
