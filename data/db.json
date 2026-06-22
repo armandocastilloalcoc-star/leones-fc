@@ -20,56 +20,197 @@
     "dominio": "https://leonesfc.org"
   },
   "stats": [
-    { "num": 0, "sufijo": "", "label": "Partidos jugados" },
-    { "num": 0, "sufijo": "", "label": "Goles anotados" },
-    { "num": 0, "sufijo": "", "label": "Jugadores" },
-    { "num": 3, "sufijo": "", "label": "Categorías" }
+    {
+      "num": 0,
+      "sufijo": "",
+      "label": "Partidos jugados"
+    },
+    {
+      "num": 0,
+      "sufijo": "",
+      "label": "Goles anotados"
+    },
+    {
+      "num": 0,
+      "sufijo": "",
+      "label": "Jugadores"
+    },
+    {
+      "num": 3,
+      "sufijo": "",
+      "label": "Categorías"
+    }
   ],
   "valores": [
-    { "ic": "shield", "n": "Garra", "d": "Damos todo en cada jugada, hasta el último segundo." },
-    { "ic": "heart", "n": "Corazón", "d": "Jugamos con pasión y respeto por el equipo." },
-    { "ic": "users", "n": "Unión", "d": "Una manada fuerte: nadie juega solo." },
-    { "ic": "target", "n": "Disciplina", "d": "La constancia construye campeones de verdad." },
-    { "ic": "star", "n": "Esfuerzo", "d": "Cada gota de sudor nos hace mejores." },
-    { "ic": "smile", "n": "Alegría", "d": "Disfrutamos el juego que amamos." },
-    { "ic": "handshake", "n": "Respeto", "d": "Al rival, al árbitro y a nosotros mismos." },
-    { "ic": "trophy", "n": "Mentalidad", "d": "Pensamos y competimos como campeones." }
+    {
+      "ic": "shield",
+      "n": "Garra",
+      "d": "Damos todo en cada jugada, hasta el último segundo."
+    },
+    {
+      "ic": "heart",
+      "n": "Corazón",
+      "d": "Jugamos con pasión y respeto por el equipo."
+    },
+    {
+      "ic": "users",
+      "n": "Unión",
+      "d": "Una manada fuerte: nadie juega solo."
+    },
+    {
+      "ic": "target",
+      "n": "Disciplina",
+      "d": "La constancia construye campeones de verdad."
+    },
+    {
+      "ic": "star",
+      "n": "Esfuerzo",
+      "d": "Cada gota de sudor nos hace mejores."
+    },
+    {
+      "ic": "smile",
+      "n": "Alegría",
+      "d": "Disfrutamos el juego que amamos."
+    },
+    {
+      "ic": "handshake",
+      "n": "Respeto",
+      "d": "Al rival, al árbitro y a nosotros mismos."
+    },
+    {
+      "ic": "trophy",
+      "n": "Mentalidad",
+      "d": "Pensamos y competimos como campeones."
+    }
   ],
   "categorias": [
-    { "id": 1, "nombre": "Categoría 1", "desc": "Los más pequeños de la manada." },
-    { "id": 2, "nombre": "Categoría 2", "desc": "Creciendo con garra y técnica." },
-    { "id": 3, "nombre": "Categoría 3", "desc": "Los mayores, listos para rugir." }
+    {
+      "id": 1,
+      "nombre": "Categoría 1",
+      "desc": "Los más pequeños de la manada."
+    },
+    {
+      "id": 2,
+      "nombre": "Categoría 2",
+      "desc": "Creciendo con garra y técnica."
+    },
+    {
+      "id": 3,
+      "nombre": "Categoría 3",
+      "desc": "Los mayores, listos para rugir."
+    }
   ],
   "jugadores": [],
   "partidos": [],
   "resultados": [],
   "noticias": [],
   "galeria": [
-    { "img": "assets/campeon.jpg", "c": "Rugido de <span class=\"r\">campeón</span>" },
-    { "img": "assets/hero.jpg", "c": "Orgullo Leones F.C." },
-    { "img": "assets/anthem.jpg", "c": "Con <span class=\"r\">garra</span>" }
+    {
+      "img": "assets/campeon.jpg",
+      "c": "Rugido de <span class=\"r\">campeón</span>"
+    }
   ],
   "tienda": {
     "moneda": "MXN",
     "aviso": "Pagos seguros con Stripe",
     "productos": [
-      { "n": "Uniforme Local", "cat": "Uniformes", "precio": "$650", "ic": "jersey", "d": "Playera, short y calcetas. Blanco/azul.", "link": "#" },
-      { "n": "Uniforme Visita", "cat": "Uniformes", "precio": "$650", "ic": "jersey", "d": "Edición azul royal con detalles rojos.", "link": "#" },
-      { "n": "Playera de Juego", "cat": "Uniformes", "precio": "$320", "ic": "jersey", "d": "Jersey oficial con el escudo Leones.", "link": "#" },
-      { "n": "Sudadera Leones", "cat": "Uniformes", "precio": "$480", "ic": "hoodie", "d": "Sudadera con capucha y logo bordado.", "link": "#" },
-      { "n": "Balón con Logo", "cat": "Souvenirs", "precio": "$280", "ic": "ball", "d": "Balón oficial No.4 con escudo Leones.", "link": "#" },
-      { "n": "Gorra Leones", "cat": "Souvenirs", "precio": "$220", "ic": "cap", "d": "Gorra ajustable con escudo bordado.", "link": "#" },
-      { "n": "Termo Leones", "cat": "Souvenirs", "precio": "$190", "ic": "bottle", "d": "Termo deportivo con logo del club.", "link": "#" },
-      { "n": "Llavero Leones", "cat": "Souvenirs", "precio": "$60", "ic": "key", "d": "Llavero metálico con el escudo.", "link": "#" }
+      {
+        "n": "Uniforme Local",
+        "cat": "Uniformes",
+        "precio": "$650",
+        "ic": "kit",
+        "d": "Playera, short y calcetas. Blanco/azul.",
+        "link": "#"
+      },
+      {
+        "n": "Uniforme Visita",
+        "cat": "Uniformes",
+        "precio": "$650",
+        "ic": "kit",
+        "d": "Edición azul royal con detalles rojos.",
+        "link": "#"
+      },
+      {
+        "n": "Playera de Juego",
+        "cat": "Uniformes",
+        "precio": "$320",
+        "ic": "jersey",
+        "d": "Jersey oficial con el escudo Leones.",
+        "link": "#"
+      },
+      {
+        "n": "Sudadera Leones",
+        "cat": "Uniformes",
+        "precio": "$480",
+        "ic": "hoodie",
+        "d": "Sudadera con capucha y logo bordado.",
+        "link": "#"
+      },
+      {
+        "n": "Balón con Logo",
+        "cat": "Souvenirs",
+        "precio": "$280",
+        "ic": "ball",
+        "d": "Balón oficial No.4 con escudo Leones.",
+        "link": "#"
+      },
+      {
+        "n": "Gorra Leones",
+        "cat": "Souvenirs",
+        "precio": "$220",
+        "ic": "cap",
+        "d": "Gorra ajustable con escudo bordado.",
+        "link": "#"
+      },
+      {
+        "n": "Termo Leones",
+        "cat": "Souvenirs",
+        "precio": "$190",
+        "ic": "bottle",
+        "d": "Termo deportivo con logo del club.",
+        "link": "#"
+      },
+      {
+        "n": "Llavero Leones",
+        "cat": "Souvenirs",
+        "precio": "$60",
+        "ic": "key",
+        "d": "Llavero metálico con el escudo.",
+        "link": "#"
+      }
     ]
   },
   "historia": [
-    { "yr": "—", "t": "Nace el equipo", "d": "El inicio de la manada Leones F.C." },
-    { "yr": "—", "t": "Primer entrenamiento", "d": "La primera manada pisa la cancha." },
-    { "yr": "—", "t": "Primer partido oficial", "d": "Debutamos con garra desde el día uno." },
-    { "yr": "—", "t": "Primer torneo", "d": "Nuestra primera competencia oficial." },
-    { "yr": "—", "t": "Grandes momentos", "d": "Los logros que llenan de orgullo al club." },
-    { "yr": "Hoy", "t": "Próximos sueños", "d": "Crecer y seguir formando campeones de vida." }
+    {
+      "yr": "—",
+      "t": "Nace el equipo",
+      "d": "El inicio de la manada Leones F.C."
+    },
+    {
+      "yr": "—",
+      "t": "Primer entrenamiento",
+      "d": "La primera manada pisa la cancha."
+    },
+    {
+      "yr": "—",
+      "t": "Primer partido oficial",
+      "d": "Debutamos con garra desde el día uno."
+    },
+    {
+      "yr": "—",
+      "t": "Primer torneo",
+      "d": "Nuestra primera competencia oficial."
+    },
+    {
+      "yr": "—",
+      "t": "Grandes momentos",
+      "d": "Los logros que llenan de orgullo al club."
+    },
+    {
+      "yr": "Hoy",
+      "t": "Próximos sueños",
+      "d": "Crecer y seguir formando campeones de vida."
+    }
   ],
   "himno": {
     "lineas": [
@@ -80,16 +221,38 @@
     ]
   },
   "avisos": [
-    { "badge": "info", "texto": "<b>Inscripciones abiertas.</b> Acércate y forma parte de la manada." }
+    {
+      "badge": "info",
+      "texto": "<b>Inscripciones abiertas.</b> Acércate y forma parte de la manada."
+    }
   ],
   "infoPapas": [
-    { "ic": "clock", "t": "Entrenamientos", "s": "Días y horarios por categoría (próximamente)." },
-    { "ic": "pin", "t": "Cancha", "s": "Ubicación de entrenamientos y partidos." },
-    { "ic": "shield", "t": "Equipo seguro", "s": "Ambiente sano, respetuoso y supervisado." },
-    { "ic": "wallet", "t": "Cuotas", "s": "Información de inscripción y mensualidad." }
+    {
+      "ic": "clock",
+      "t": "Entrenamientos",
+      "s": "Días y horarios por categoría (próximamente)."
+    },
+    {
+      "ic": "pin",
+      "t": "Cancha",
+      "s": "Ubicación de entrenamientos y partidos."
+    },
+    {
+      "ic": "shield",
+      "t": "Equipo seguro",
+      "s": "Ambiente sano, respetuoso y supervisado."
+    },
+    {
+      "ic": "wallet",
+      "t": "Cuotas",
+      "s": "Información de inscripción y mensualidad."
+    }
   ],
   "cuerpoTecnico": [
-    { "nombre": "Profesor Guillermo", "rol": "Entrenador" }
+    {
+      "nombre": "Profesor Guillermo",
+      "rol": "Entrenador"
+    }
   ],
   "frases": [
     "Ruge fuerte",
