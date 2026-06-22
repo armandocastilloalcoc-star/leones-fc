@@ -55,7 +55,7 @@ header.scrolled .brand,header.solid .brand{color:var(--navy)}
 .brand .crest{height:46px;width:auto;flex:0 0 auto;object-fit:contain}
 .brand .bname{font-family:var(--display);font-size:1.35rem;letter-spacing:1px;line-height:1}
 .brand .btag{font-family:var(--cond);font-weight:600;font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;opacity:.8}
-.menu{display:flex;align-items:center;gap:26px}
+.menu{display:flex;align-items:center;gap:17px}
 .menu a{font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;color:rgba(255,255,255,.9);position:relative;padding:4px 0;transition:color .25s}
 header.scrolled .menu a,header.solid .menu a{color:var(--navy)}
 .menu a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--rojo);transition:width .3s}

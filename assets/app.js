@@ -107,6 +107,7 @@
     { t: 'Club', h: 'club.html', k: 'club' },
     { t: 'Equipo', h: 'equipo.html', k: 'equipo' },
     { t: 'Calendario', h: 'calendario.html', k: 'calendario' },
+    { t: 'Visorías', h: 'visorias.html', k: 'visorias' },
     { t: 'Resultados', h: 'resultados.html', k: 'resultados' },
     { t: 'Galería', h: 'galeria.html', k: 'galeria' },
     { t: 'Tienda', h: 'tienda.html', k: 'tienda' },
@@ -281,13 +282,6 @@
     const desc = (c.descripcion || []).map(p => `<p>${esc(p)}</p>`).join('');
     const valores = (db.valores || []).map((v, i) => `<div class="valor${i % 2 ? ' red' : ''} reveal"><div class="ico">${icoStroke(v.ic)}</div><h3>${esc(v.n)}</h3><p>${esc(v.d)}</p></div>`).join('');
     const tl = (db.historia || []).map(t => `<div class="tl-item reveal"><span class="dot"></span><div class="tl-card"><div class="yr">${esc(t.yr)}</div><h4>${esc(t.t)}</h4><p>${esc(t.d)}</p></div></div>`).join('');
-    const H = db.himno || {};
-    const stz = a => (a || []).join('<br>');
-    let himno;
-    if (H.coro || H.versos) {
-      himno = (H.coro ? '<p class="coro"><span class="lbl">Coro</span>' + stz(H.coro) + '</p>' : '') +
-        (H.versos || []).map(v => '<p>' + stz(v) + '</p>').join('');
-    } else { himno = stz(H.lineas); }
     return `
     ${pageHero('El <span class="hl">Club</span>', 'Más que un equipo: una manada con garra, corazón y valores que forman campeones de vida.', 'El club')}
     <section class="identity flush"><div class="wrap"><div class="identity-grid">
@@ -296,7 +290,6 @@
     </div></div></section>
     <section class="valores"><div class="wrap"><div class="section-head reveal"><span class="eyebrow">El ADN del club</span><h2 class="section-title">Nuestros <span class="hl">valores</span></h2><p>Ocho principios que nos hacen Leones dentro y fuera de la cancha.</p></div><div class="valores-grid">${valores}</div></div></section>
     <section class="history"><div class="wrap"><div class="section-head reveal" style="margin:0 auto 46px;text-align:center"><span class="eyebrow" style="justify-content:center">Nuestra historia</span><h2 class="section-title">El camino de la <span class="hl">manada</span></h2></div><div class="timeline">${tl}</div></div></section>
-    <section class="anthem"><div class="wrap"><img class="crest-sm" src="assets/logo.png" alt="Escudo ${esc(c.nombre)}" width="74" height="74"><span class="eyebrow light" style="justify-content:center">El himno</span><h2>Canta con <span class="hl">orgullo</span></h2><div class="lyrics">${himno}</div></div></section>
     ${ctaBand()}`;
   };
 
@@ -327,6 +320,23 @@
         <div class="status ${esc(m.estado || 'proximo')}">${labelEstado(m.estado)}</div></div>`;
     }).join('');
     return `${pageHero('<span class="hl">Calendario</span>', 'Próximos partidos y compromisos de la manada Leones F.C.', 'Calendario')}
+    <section class="fixtures"><div class="wrap"><div class="fx-list">${list}</div></div></section>${ctaBand()}`;
+  };
+
+  R.visorias = (db) => {
+    const VL = { proximo: 'Próxima', realizada: 'Realizada', cancelada: 'Cancelada' };
+    const VC = { proximo: 'proximo', realizada: 'ganado', cancelada: 'perdido' };
+    const vs = (db.visorias || []).slice().sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+    let list;
+    if (!vs.length) list = emptyState(false, 'Sin visorías por ahora', 'Cuando agendemos una visoría con algún equipo, aquí verás la fecha, el lugar y la hora. ¡Mantente atento!', 'clock');
+    else list = vs.map(m => {
+      const d = parseDate(m.fecha), e = m.estado || 'proximo';
+      return `<div class="fx reveal"><div class="date"><div class="d">${d.day}</div><div class="m">${d.mon}</div></div>
+        <div class="match"><div class="vs">Visoría con ${esc(m.equipo || 'equipo por confirmar')}</div><div class="place">${icoStroke('pin')} ${esc(m.lugar || 'Por confirmar')}${m.cat ? ' · Cat. ' + esc(m.cat) : ''}</div></div>
+        <div class="hour">${esc(m.hora || '—')}</div>
+        <div class="status ${VC[e] || 'proximo'}">${VL[e] || 'Próxima'}</div></div>`;
+    }).join('');
+    return `${pageHero('<span class="hl">Visorías</span>', '¿Quieres formar parte de la manada? Aquí publicamos las visorías (pruebas) que pactamos con otros equipos: fecha, lugar y hora.', 'Visorías')}
     <section class="fixtures"><div class="wrap"><div class="fx-list">${list}</div></div></section>${ctaBand()}`;
   };
 
