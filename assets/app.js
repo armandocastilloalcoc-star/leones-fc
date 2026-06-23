@@ -238,7 +238,7 @@
         </div>
         <div class="hero-art">
           <div class="hero-photo">
-            <img src="${esc(heroImg)}" alt="Jugador de ${esc(c.nombre)} en el estadio" width="400" height="533">
+            <img src="${esc(heroImg)}?v=4" alt="Jugador de ${esc(c.nombre)} en el estadio" width="400" height="533">
             <img class="hp-logo" src="assets/logo.png" alt="Escudo ${esc(c.nombre)}" width="62" height="62">
             <span class="hp-tag">Orgullo Leones</span>
           </div>
